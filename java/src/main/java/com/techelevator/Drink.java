@@ -37,6 +37,11 @@ public class Drink implements Vendables{
         return stock;
     }
 
+    @Override
+    public void setStock(int amount) {
+        this.stock = this.stock - amount;
+    }
+
     public String getSound(){
         return "\"Glug Glug, Yum!\"";
     }

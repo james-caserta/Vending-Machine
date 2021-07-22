@@ -38,9 +38,10 @@ public class Gum implements Vendables{
     }
 
     @Override
-    public void setStock(int stock) { //can't override with param???
-        this.stock=stock;
+    public void setStock(int amount) {
+        this.stock = this.stock - amount;
     }
+
 
     @Override
     public String getSound() {

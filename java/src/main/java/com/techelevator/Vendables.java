@@ -7,7 +7,7 @@ public interface Vendables {
     String getLocation();
     BigDecimal getPrice();
     int getStock();
-    void setStock();
+    void setStock(int amount);
     public String getSound();
 
 

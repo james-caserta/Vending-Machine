@@ -41,7 +41,7 @@ public class VendingMachine {
                     System.out.println("Insufficient Funds");
                 } else {
                     wallet.setBalance(wallet.getBalance() - v.getPrice());
-                    v.reduceStock;
+                    v.setStock(v.getStock()-1);
                     salesCount++;
                 }
             }
