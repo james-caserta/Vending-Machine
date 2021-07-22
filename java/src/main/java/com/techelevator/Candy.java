@@ -11,12 +11,10 @@ public class Candy implements Vendables{
     private String makeSound = null;
 
 //Constructor
-    public Candy(String location, String name, BigDecimal price, int stock, String makeSound) {
+    public Candy(String location, String name, BigDecimal price) {
         this.location = location;
         this.name = name;
         this.price = price;
-        this.stock = stock;
-        this.makeSound = makeSound;
     }
 
     public String getLocation() {

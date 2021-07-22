@@ -13,12 +13,10 @@ public class Gum implements Vendables{
 //Constructor
 
 
-    public Gum(String location, String name, BigDecimal price, int stock, String makeSound) {
+    public Gum(String location, String name, BigDecimal price) {
         this.location = location;
         this.name = name;
         this.price = price;
-        this.stock = stock;
-        this.makeSound = makeSound;
     }
 
     public String getLocation() {
