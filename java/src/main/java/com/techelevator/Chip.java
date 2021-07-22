@@ -7,7 +7,7 @@ public class Chip implements Vendables{
     private String location = null;
     private String name = null;
     private BigDecimal price = new BigDecimal("");
-    private int stock = 0;
+    private int stock = 5;
     private String makeSound = null;
 
 //Constructor
@@ -17,6 +17,22 @@ public class Chip implements Vendables{
         this.price = price;
         this.stock = stock;
         this.makeSound = makeSound;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public int getStock() {
+        return stock;
     }
 
     public String getSound(){
