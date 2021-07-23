@@ -6,7 +6,7 @@ public class Candy implements Vendables{
 
     private String location = null;
     private String name = null;
-    private BigDecimal price = new BigDecimal("");
+    private BigDecimal price;
     private int stock = 5;
     private String makeSound = null;
 

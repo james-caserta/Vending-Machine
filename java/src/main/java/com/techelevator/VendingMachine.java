@@ -16,13 +16,16 @@ public class VendingMachine {
         return output;
     }
 
+    public List<Vendables> getVendablesList() {
+        return vendablesList;
+    }
 
     public String getItemStock(String location) {
         String stockStatus = "";
         for (Vendables v : vendablesList) {
             if (v.getLocation().equals(location)) {
                 if (v.getStock() == 0) {
-                    stockStatus = "**SOLD OUT**";
+                    stockStatus = "SOLD OUT";
                 }
                 stockStatus = Integer.toString(v.getStock());
             }
@@ -34,17 +37,4 @@ public class VendingMachine {
         vendablesList.add(vendable);
     }
 
-    public void vend(String location) {
-        for (Vendables v : vendablesList) {
-            if (v.getLocation().equals(location)) {
-                if (v.getPrice() > wallet.getBalance()) {
-                    System.out.println("Insufficient Funds");
-                } else {
-                    wallet.setBalance(wallet.getBalance() - v.getPrice());
-                    v.setStock(v.getStock()-1);
-                    salesCount++;
-                }
-            }
-        }
-    }
 }
