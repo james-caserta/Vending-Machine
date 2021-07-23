@@ -26,6 +26,7 @@ public class VendingMachineCLI {
 
     private Wallet wallet = new Wallet();
     private VendingMachine vendingMachine = new VendingMachine();
+    private Records records = new Records("log.txt");
 
     public void run() {
         loadMachine();
@@ -60,6 +61,8 @@ public class VendingMachineCLI {
                 startVend(location);
 
             } else if (choice.equals("Finish transaction")) {
+                createChangeRecord();
+
                 System.out.println(wallet.getChange());
                 stay = false;
             } else {
@@ -77,12 +80,16 @@ public class VendingMachineCLI {
             String choice = (String) menu.getChoiceFromOptions(FEED_OPTIONS);
             if (choice.equals("1")) {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("1")));
+                createFeedRecord("1");
             } else if (choice.equals("2")) {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("2")));
+                createFeedRecord("2");
             } else if (choice.equals("5")) {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("5")));
+                createFeedRecord("5");
             } else if (choice.equals("10")) {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("10")));
+                createFeedRecord("10");
             } else if (choice.equals("Return")) {
                 stay = false;
             } else {
@@ -146,7 +153,7 @@ public class VendingMachineCLI {
                         wallet.setCurrentBalance(wallet.getCurrentBalance().subtract(v.getPrice()));
                         v.setStock(v.getStock() - 1);
                         System.out.println(v.getSound());
-                        //salesCount++;
+                        createPurchaseRecord(v);
                         }
                     }
                 System.out.println("Stock: " + vendingMachine.getItemStock(location));
@@ -157,7 +164,40 @@ public class VendingMachineCLI {
                 }
             }
         }
+
+
+        public void createFeedRecord(String choice){
+        String dollarAmount = "";
+
+            if (choice.equals("1")) {
+                dollarAmount = "1.00";
+            } else if (choice.equals("2")) {
+                dollarAmount = "2.00";
+            } else if (choice.equals("5")) {
+                dollarAmount = "5.00";
+            } else if (choice.equals("10")) {
+                dollarAmount = "10.00";
+            }
+            String feedStr = "FEED MONEY: \\$" + dollarAmount + "\\$" + wallet.getCurrentBalance();
+            records.writeToFile(feedStr);
     }
+
+        public void createPurchaseRecord(Vendables v){
+        BigDecimal previousBalance = wallet.getCurrentBalance().add(v.getPrice());
+            String purchaseStr = v.getName() + " " + v.getLocation() + " \\$" + previousBalance + " \\$" + wallet.getCurrentBalance();
+            records.writeToFile(purchaseStr);
+    }
+
+        public void createChangeRecord(){
+        String changeStr = "GIVE CHANGE: \\$" + wallet.getCurrentBalance() + " \\$0.00";
+        records.writeToFile(changeStr);
+        }
+
+
+
+    }
+
+
 
 
 
