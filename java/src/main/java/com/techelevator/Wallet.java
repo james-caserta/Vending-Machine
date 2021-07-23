@@ -20,22 +20,23 @@ public class Wallet {
         int dimes = 0;
         int nickels = 0;
         String change = "";
-        while (currentBalance.compareTo(currentBalance.subtract(new BigDecimal("0.25"))) >=0) {
-            currentBalance.subtract(new BigDecimal("0.25"));
+
+
+        while (currentBalance.compareTo(new BigDecimal("0")) >0) {
+            currentBalance = currentBalance.subtract(new BigDecimal("0.25")).setScale(2, RoundingMode.HALF_UP);
             quarters++;
         }
-        while (currentBalance.compareTo(currentBalance.subtract(new BigDecimal("0.10"))) >=0) {
-            currentBalance.subtract(new BigDecimal("0.10"));
+        while (currentBalance.compareTo(new BigDecimal("0")) >0) {
+            currentBalance = currentBalance.subtract(new BigDecimal("0.10")).setScale(2, RoundingMode.HALF_UP);
             dimes++;
         }
-        while (currentBalance.compareTo(currentBalance.subtract(new BigDecimal("0.05"))) >=0) {
-            currentBalance.subtract(new BigDecimal("0.05"));
+        while (currentBalance.compareTo(new BigDecimal("0")) >0) {
+            currentBalance = currentBalance.subtract(new BigDecimal("0.05")).setScale(2, RoundingMode.HALF_UP);
             nickels++;
         }
-        change = "Your change is: " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels."
+        change = "Your change is: " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels.";
         return change;
     }
-
 
 
 
