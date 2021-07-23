@@ -23,16 +23,34 @@ public class Wallet {
 
 
         while (currentBalance.compareTo(new BigDecimal("0")) >0) {
-            currentBalance = currentBalance.subtract(new BigDecimal("0.25")).setScale(2, RoundingMode.HALF_UP);
-            quarters++;
+            BigDecimal subtractedBalance = currentBalance.subtract(new BigDecimal("0.25"));
+            if(subtractedBalance.compareTo(new BigDecimal("0")) >=0) {
+                currentBalance = currentBalance.subtract(new BigDecimal("0.25")).setScale(2, RoundingMode.HALF_UP);
+                quarters++;
+            }
+            else{
+                break;
+            }
         }
         while (currentBalance.compareTo(new BigDecimal("0")) >0) {
-            currentBalance = currentBalance.subtract(new BigDecimal("0.10")).setScale(2, RoundingMode.HALF_UP);
-            dimes++;
+            BigDecimal subtractedBalance = currentBalance.subtract(new BigDecimal("0.10"));
+            if(subtractedBalance.compareTo(new BigDecimal("0")) >=0) {
+                currentBalance = currentBalance.subtract(new BigDecimal("0.10")).setScale(2, RoundingMode.HALF_UP);
+                dimes++;
+            }
+            else{
+                break;
+            }
         }
         while (currentBalance.compareTo(new BigDecimal("0")) >0) {
-            currentBalance = currentBalance.subtract(new BigDecimal("0.05")).setScale(2, RoundingMode.HALF_UP);
-            nickels++;
+            BigDecimal subtractedBalance = currentBalance.subtract(new BigDecimal("0.05"));
+            if(subtractedBalance.compareTo(new BigDecimal("0")) >=0) {
+                currentBalance = currentBalance.subtract(new BigDecimal("0.05")).setScale(2, RoundingMode.HALF_UP);
+                nickels++;
+            }
+            else{
+                break;
+            }
         }
         change = "Your change is: " + quarters + " quarters, " + dimes + " dimes, " + nickels + " nickels.";
         return change;

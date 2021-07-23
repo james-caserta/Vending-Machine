@@ -27,7 +27,9 @@ public class VendingMachine {
                 if (v.getStock() == 0) {
                     stockStatus = "SOLD OUT";
                 }
-                stockStatus = Integer.toString(v.getStock());
+                else {
+                    stockStatus = Integer.toString(v.getStock());
+                }
             }
         }
         return stockStatus;

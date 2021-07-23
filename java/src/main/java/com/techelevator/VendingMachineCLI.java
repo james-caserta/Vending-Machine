@@ -12,7 +12,8 @@ public class VendingMachineCLI {
 
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
-    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE};
+    private static final String MAIN_MENU_OPTION_EXIT = "Exit";
+    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT};
 
     private static final String[] PURCHASE_OPTIONS = {"Feed money", "Select product", "Finish transaction"};
     private static final String[] FEED_OPTIONS = {"1", "2", "5", "10", "Return"};
@@ -35,6 +36,10 @@ public class VendingMachineCLI {
                 System.out.println(vendingMachine.toString());
             } else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
                 displaySecondLevelMenu();
+            } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
+                System.exit(0);
+            } else {
+                choice = null;
             }
         }
     }
@@ -51,12 +56,14 @@ public class VendingMachineCLI {
                 System.out.println(vendingMachine.toString());
                 Scanner userInput = new Scanner(System.in);
                 System.out.println("Enter Product Code:");
-                String location = userInput.nextLine();
+                String location = userInput.nextLine().toUpperCase();
                 startVend(location);
 
             } else if (choice.equals("Finish transaction")) {
                 System.out.println(wallet.getChange());
                 stay = false;
+            } else {
+                choice = null;
             }
             System.out.println("Current Money Provided: $" + wallet.getCurrentBalance());
         }
@@ -78,6 +85,8 @@ public class VendingMachineCLI {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("10")));
             } else if (choice.equals("Return")) {
                 stay = false;
+            } else {
+                choice = null;
             }
             //System.out.println("Current Money Provided: $"+wallet.getCurrentBalance());
         }
@@ -126,15 +135,25 @@ public class VendingMachineCLI {
     }
 
     public void startVend(String location) {
+        int counter = 0;
         for (Vendables v : vendingMachine.getVendablesList()) {
             if (v.getLocation().equals(location)) {
+                if (!vendingMachine.getItemStock(location).equals("SOLD OUT")) {
                     if (v.getPrice().compareTo(wallet.getCurrentBalance()) > 0) {
                         System.out.println("Insufficient Funds");
-                    } else {
+                        }
+                    else {
                         wallet.setCurrentBalance(wallet.getCurrentBalance().subtract(v.getPrice()));
                         v.setStock(v.getStock() - 1);
+                        System.out.println(v.getSound());
                         //salesCount++;
+                        }
                     }
+                System.out.println("Stock: " + vendingMachine.getItemStock(location));
+                }
+            counter++;
+            if (counter > 16) {
+                System.out.println("Invalid Item Location");
                 }
             }
         }

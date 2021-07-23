@@ -35,7 +35,7 @@ public class Candy implements Vendables{
 
     @Override
     public void setStock(int amount) {
-        this.stock = this.stock - amount;
+        this.stock = amount;
     }
 
     public String getSound(){
