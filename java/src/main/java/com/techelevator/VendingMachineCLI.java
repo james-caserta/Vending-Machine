@@ -5,7 +5,6 @@ import com.techelevator.view.Menu;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -77,6 +76,7 @@ public class VendingMachineCLI {
         boolean stay = true;
 
         while (stay) {
+            System.out.println("Current Money Provided: $"+wallet.getCurrentBalance());
             String choice = (String) menu.getChoiceFromOptions(FEED_OPTIONS);
             if (choice.equals("1")) {
                 wallet.setCurrentBalance(wallet.getCurrentBalance().add(new BigDecimal("1")));
@@ -95,7 +95,6 @@ public class VendingMachineCLI {
             } else {
                 choice = null;
             }
-            //System.out.println("Current Money Provided: $"+wallet.getCurrentBalance());
         }
     }
 
@@ -141,29 +140,32 @@ public class VendingMachineCLI {
         }
     }
 
-    public void startVend(String location) {
+   public String startVend(String location) {
         int counter = 0;
         for (Vendables v : vendingMachine.getVendablesList()) {
             if (v.getLocation().equals(location)) {
                 if (!vendingMachine.getItemStock(location).equals("SOLD OUT")) {
                     if (v.getPrice().compareTo(wallet.getCurrentBalance()) > 0) {
                         System.out.println("Insufficient Funds");
-                        }
-                    else {
+                        return "NSF";
+                    } else {
                         wallet.setCurrentBalance(wallet.getCurrentBalance().subtract(v.getPrice()));
                         v.setStock(v.getStock() - 1);
                         System.out.println(v.getSound());
                         createPurchaseRecord(v);
-                        }
                     }
-                System.out.println("Stock: " + vendingMachine.getItemStock(location));
                 }
+                System.out.println("Stock: " + vendingMachine.getItemStock(location));
+            }
             counter++;
             if (counter > 16) {
                 System.out.println("Invalid Item Location");
-                }
+                return "bad location";
             }
+
         }
+        return "good vend";
+    }
 
 
         public void createFeedRecord(String choice){
